@@ -18,6 +18,11 @@ export {
 } from "./components/dialog/dialog";
 export { Input, type InputProps } from "./components/input/input";
 export {
+  MultiSelect,
+  type MultiSelectOption,
+  type MultiSelectProps,
+} from "./components/multi-select/multi-select";
+export {
   Popover,
   PopoverAnchor,
   PopoverContent,
