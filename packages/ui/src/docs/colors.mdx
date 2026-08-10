@@ -1,0 +1,13 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ColorTokenGrid } from "./color-token-grid";
+
+<Meta title="Foundations/Colors" />
+
+# Color tokens
+
+Semantic tokens, resolved live from CSS custom properties. Flip the theme in the toolbar
+and the swatches, resolved values, and contrast ratios recompute — this page doubles as a
+living WCAG audit. The same pairs are enforced in `tokens.test.ts`, so a regression fails
+CI before it reaches this page.
+
+<ColorTokenGrid />

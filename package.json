@@ -14,16 +14,21 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:unit": "vitest run --project mock-api --project ui --project dashboard"
+    "test:unit": "vitest run --project mock-api --project ui --project dashboard",
+    "storybook": "pnpm --filter @pulseboard/ui storybook",
+    "build-storybook": "pnpm --filter @pulseboard/ui build-storybook",
+    "test:storybook": "vitest run --project storybook"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@vitest/browser": "^4.1.10",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.9.0",
+    "playwright": "^1.62.1",
     "prettier": "^3.9.6",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.66.0",

@@ -1,0 +1,29 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Docs/Introduction" />
+
+# Pulseboard Design System
+
+The component library behind **Pulseboard**, an operations dashboard for multi-location
+clinics. Everything here is consumed by the dashboard app; nothing exists "just in case".
+
+## Principles
+
+- **Semantic tokens only.** Tailwind's default palette is wiped (`--color-*: initial`), so
+  `bg-blue-500` is a build error. Components speak in `surface`, `text-muted`, `accent`,
+  `positive`, `negative` — never raw hues.
+- **Both themes always.** Light ("warm paper") and dark ("pine ink") ship together. The
+  toolbar theme switch stamps `data-theme` on `<html>`; every token pair is
+  contrast-audited by a unit test and rendered live in the Colors page.
+- **Numbers are typography.** Every numeric surface uses Spline Sans Mono with
+  `tabular-nums` — the `numeric-data` utility — so columns of figures align like an
+  instrument panel.
+- **Deliberately pruned.** No Toast, no Breadcrumbs, no Avatar, no command palette. A
+  three-page analytics dashboard does not need them; a design system is defined as much
+  by what it leaves out.
+
+## Stories are the test suite
+
+Every story renders in CI through the Storybook Vitest addon: play functions drive real
+interactions in Chromium and the a11y addon fails the build on axe violations. If it's
+documented here, it's tested.

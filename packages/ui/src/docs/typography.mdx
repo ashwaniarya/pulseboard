@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+Two families, one job each.
+
+**Bricolage Grotesque** carries the interface — labels, headings, body copy. It has
+enough personality to be recognizable without stealing attention from data.
+
+**Spline Sans Mono** carries every number. Applied through the `numeric-data` utility
+(`font-variant-numeric: tabular-nums`), so digits share a fixed width and columns of
+metrics align vertically.
+
+## Scale
+
+<div className="space-y-3">
+  <p className="text-3xl font-semibold">Pulseboard — 30px semibold, page titles</p>
+  <p className="text-xl font-semibold">Section heading — 20px semibold</p>
+  <p className="text-base">Body copy — 16px regular, used for descriptions.</p>
+  <p className="text-sm text-text-muted">Supporting text — 14px muted</p>
+  <p className="text-xs uppercase tracking-wide text-text-muted">Overline label — 12px</p>
+</div>
+
+## Tabular numbers
+
+<div className="mt-4 space-y-1">
+  <p className="numeric-data text-2xl">1,184 calls · $84,210.50</p>
+  <p className="numeric-data text-2xl">2,041 calls · $9,113.25</p>
+</div>
+
+Same widths, every digit — swap any digit and nothing shifts.
