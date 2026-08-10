@@ -5,5 +5,9 @@
   "type": "module",
   "devDependencies": {
     "vitest": "^4.1.10"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
   }
 }
