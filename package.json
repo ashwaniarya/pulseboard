@@ -1,0 +1,14 @@
+{
+  "name": "pulseboard",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.15.2",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @pulseboard/dashboard dev",
+    "build": "pnpm --filter @pulseboard/dashboard build",
+    "typecheck": "pnpm -r typecheck"
+  }
+}

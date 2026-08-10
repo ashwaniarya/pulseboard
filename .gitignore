@@ -1,0 +1,12 @@
+node_modules/
+dist/
+storybook-static/
+coverage/
+.vercel/
+.eslintcache
+*.tsbuildinfo
+.DS_Store
+*.local
+cypress/screenshots/
+cypress/videos/
+stats.html
