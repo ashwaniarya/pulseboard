@@ -33,3 +33,26 @@ describe("OverviewPage", () => {
     expect(screen.getByText("Appointments completed")).toBeInTheDocument();
   });
 });
+
+describe("OverviewPage leaderboard and filters", () => {
+  it("lists every location ranked once data arrives", async () => {
+    renderDashboardAt("/?range=last30");
+    const list = await screen.findByRole("list", undefined, { timeout: 5000 });
+    const { getAllByRole } = await import("@testing-library/react").then((m) => ({
+      getAllByRole: m.within(list).getAllByRole.bind(m.within(list)),
+    }));
+    expect(getAllByRole("listitem")).toHaveLength(12);
+  });
+
+  it("updates the url when the range preset changes", async () => {
+    const user = (await import("@testing-library/user-event")).default.setup();
+    renderDashboardAt("/?range=last30");
+    await screen.findByText("Calls answered", undefined, { timeout: 5000 });
+    await user.click(screen.getByRole("button", { name: "Date range: Last 30 days" }));
+    await user.click(await screen.findByRole("button", { name: "Last 7 days" }));
+    expect(window.location.search).toContain("range=last7");
+    expect(
+      await screen.findByRole("button", { name: "Date range: Last 7 days" }),
+    ).toBeInTheDocument();
+  });
+});

@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { buildDeltaFromComparison, buildKpiTileModels, buildTrendChartModel } from "./transforms";
+import {
+  buildDeltaFromComparison,
+  buildKpiTileModels,
+  buildTrendChartModel,
+  rankLocationsByAnswerRate,
+} from "./transforms";
 import type { MetricsTotals } from "./overviewApi";
 
 function totalsWith(overrides: Partial<MetricsTotals>): MetricsTotals {
@@ -119,5 +124,25 @@ describe("buildTrendChartModel", () => {
       { date: "2026-08-01", value: 15 },
       { date: "2026-08-02", value: 20 },
     ]);
+  });
+});
+
+describe("rankLocationsByAnswerRate", () => {
+  it("ranks locations by answer rate descending", () => {
+    const rows = [
+      { date: "2026-08-01", locationId: "loc-a", calls: { answered: 90, missed: 10 } },
+      { date: "2026-08-02", locationId: "loc-a", calls: { answered: 80, missed: 20 } },
+      { date: "2026-08-01", locationId: "loc-b", calls: { answered: 60, missed: 40 } },
+    ] as never[];
+    const ranked = rankLocationsByAnswerRate(
+      rows,
+      new Map([
+        ["loc-a", "Alpha"],
+        ["loc-b", "Beta"],
+      ]),
+    );
+    expect(ranked.map((row) => row.locationName)).toEqual(["Alpha", "Beta"]);
+    expect(ranked[0]?.answerRatePercent).toBeCloseTo(85, 5);
+    expect(ranked[1]?.answeredCalls).toBe(60);
   });
 });

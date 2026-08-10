@@ -1,5 +1,6 @@
 import { WidgetErrorBoundary } from "../../components/feedback/WidgetErrorBoundary";
 import { KpiTileRow } from "./KpiTileRow";
+import { LocationLeaderboard } from "./LocationLeaderboard";
 import { TrendSection } from "./TrendSection";
 
 export function OverviewPage() {
@@ -10,6 +11,9 @@ export function OverviewPage() {
       </WidgetErrorBoundary>
       <WidgetErrorBoundary>
         <TrendSection />
+      </WidgetErrorBoundary>
+      <WidgetErrorBoundary>
+        <LocationLeaderboard />
       </WidgetErrorBoundary>
     </div>
   );

@@ -210,3 +210,36 @@ export function buildTrendChartModel(
     ],
   };
 }
+
+export interface LocationLeaderboardRow {
+  locationId: string;
+  locationName: string;
+  answeredCalls: number;
+  missedCalls: number;
+  answerRatePercent: number;
+}
+
+export function rankLocationsByAnswerRate(
+  rows: readonly DailyLocationMetrics[],
+  locationNames: ReadonlyMap<string, string>,
+): LocationLeaderboardRow[] {
+  const totalsByLocation = new Map<string, { answered: number; missed: number }>();
+  for (const row of rows) {
+    const entry = totalsByLocation.get(row.locationId) ?? { answered: 0, missed: 0 };
+    entry.answered += row.calls.answered;
+    entry.missed += row.calls.missed;
+    totalsByLocation.set(row.locationId, entry);
+  }
+  return [...totalsByLocation.entries()]
+    .map(([locationId, totals]) => {
+      const totalCalls = totals.answered + totals.missed;
+      return {
+        locationId,
+        locationName: locationNames.get(locationId) ?? locationId,
+        answeredCalls: totals.answered,
+        missedCalls: totals.missed,
+        answerRatePercent: totalCalls === 0 ? 0 : (totals.answered / totalCalls) * 100,
+      };
+    })
+    .sort((first, second) => second.answerRatePercent - first.answerRatePercent);
+}
