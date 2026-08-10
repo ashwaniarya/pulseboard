@@ -55,6 +55,18 @@ export {
   PopoverTrigger,
   type PopoverContentProps,
 } from "./components/popover/popover";
+export { Pagination, type PaginationProps } from "./components/pagination/pagination";
+export {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableRow,
+  type TableCellProps,
+  type TableHeaderCellProps,
+  type TableSortDirection,
+} from "./components/table/table";
 export {
   Tab,
   TabList,
