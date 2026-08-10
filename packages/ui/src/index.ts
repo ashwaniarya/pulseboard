@@ -24,6 +24,16 @@ export {
   PopoverTrigger,
   type PopoverContentProps,
 } from "./components/popover/popover";
+export {
+  Tab,
+  TabList,
+  TabPanel,
+  Tabs,
+  type TabListProps,
+  type TabPanelProps,
+  type TabProps,
+  type TabsProps,
+} from "./components/tabs/tabs";
 export { Tooltip, type TooltipProps } from "./components/tooltip/tooltip";
 export { Select, type SelectProps } from "./components/select/select";
 export { Spinner, type SpinnerProps } from "./components/spinner/spinner";
