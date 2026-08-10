@@ -1,3 +1,14 @@
+export {
+  AppShell,
+  PulseBrandMark,
+  Sidebar,
+  SidebarNavItem,
+  Topbar,
+  type AppShellProps,
+  type SidebarNavItemProps,
+  type SidebarProps,
+  type TopbarProps,
+} from "./components/app-shell/app-shell";
 export { Badge, type BadgeProps } from "./components/badge/badge";
 export { Button, type ButtonProps } from "./components/button/button";
 export { Card, type CardProps } from "./components/card/card";
