@@ -56,4 +56,5 @@ export {
   resolveInitialTheme,
   type ThemeName,
 } from "./theme/theme-script";
+export { ThemeToggle, type ThemeToggleProps } from "./theme/theme-toggle";
 export { useTheme, type UseThemeResult } from "./theme/use-theme";
