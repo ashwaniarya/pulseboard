@@ -17,7 +17,8 @@
     "test:unit": "vitest run --project mock-api --project ui --project dashboard",
     "storybook": "pnpm --filter @pulseboard/ui storybook",
     "build-storybook": "pnpm --filter @pulseboard/ui build-storybook",
-    "test:storybook": "vitest run --project storybook"
+    "test:storybook": "vitest run --project storybook",
+    "test:e2e": "pnpm --filter @pulseboard/dashboard e2e:ci"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

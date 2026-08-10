@@ -46,7 +46,6 @@
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
     "e2e": "cypress run",
-    "e2e:ci": "start-server-and-test preview http://localhost:4173 e2e",
-    "test:e2e": "pnpm --filter @pulseboard/dashboard e2e:ci"
+    "e2e:ci": "start-server-and-test preview http://localhost:4173 e2e"
   }
 }
