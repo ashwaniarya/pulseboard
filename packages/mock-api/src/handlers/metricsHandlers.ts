@@ -63,12 +63,17 @@ export const metricsHandlers = [
       return parsed.error;
     }
     const rows = filterMetricsRows(parsed.dataset.dailyMetrics, parsed.range, parsed.locationIds);
+    const anomalyWindows = parsed.dataset.anomalyWindows.filter(
+      (window) =>
+        window.startDate <= parsed.range.endDate && window.endDate >= parsed.range.startDate,
+    );
     return HttpResponse.json({
       data: rows,
       meta: {
         startDate: parsed.range.startDate,
         endDate: parsed.range.endDate,
         locationIds: parsed.locationIds,
+        anomalyWindows,
       },
     });
   }),

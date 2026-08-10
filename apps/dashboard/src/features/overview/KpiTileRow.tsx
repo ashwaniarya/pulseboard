@@ -27,7 +27,7 @@ export function KpiTileRow() {
     <QueryStateGate query={summaryQuery} skeleton={<KpiTileRowSkeleton />}>
       {(summary) => (
         <div className={TILE_GRID_CLASSES}>
-          {buildKpiTileModels(summary.current, summary.previous, dailyQuery.data ?? []).map(
+          {buildKpiTileModels(summary.current, summary.previous, dailyQuery.data?.rows ?? []).map(
             (tile) => (
               <KpiStatTile
                 key={tile.key}

@@ -130,3 +130,83 @@ export function buildKpiTileModels(
     },
   ];
 }
+
+export type TrendMetricFamily = "calls" | "appointments" | "revenue";
+
+export interface TrendPoint {
+  date: string;
+  value: number;
+}
+
+export interface TrendSeries {
+  key: string;
+  label: string;
+  colorVariable: string;
+  points: TrendPoint[];
+}
+
+export interface TrendChartModel {
+  series: TrendSeries[];
+}
+
+function seriesFrom(
+  rows: readonly DailyRowForSeries[],
+  key: string,
+  label: string,
+  colorVariable: string,
+  readValue: (row: DailyRowForSeries) => number,
+): TrendSeries {
+  const totalsByDate = new Map<string, number>();
+  for (const row of rows) {
+    totalsByDate.set(row.date, (totalsByDate.get(row.date) ?? 0) + readValue(row));
+  }
+  const points = [...totalsByDate.entries()]
+    .sort(([firstDate], [secondDate]) => firstDate.localeCompare(secondDate))
+    .map(([date, value]) => ({ date, value }));
+  return { key, label, colorVariable, points };
+}
+
+export function buildTrendChartModel(
+  rows: readonly DailyLocationMetrics[],
+  family: TrendMetricFamily,
+): TrendChartModel {
+  if (family === "calls") {
+    return {
+      series: [
+        seriesFrom(rows, "answered", "Answered", "--chart-1", (row) => row.calls?.answered ?? 0),
+        seriesFrom(rows, "missed", "Missed", "--chart-2", (row) => row.calls?.missed ?? 0),
+      ],
+    };
+  }
+  if (family === "appointments") {
+    return {
+      series: [
+        seriesFrom(
+          rows,
+          "completed",
+          "Completed",
+          "--chart-1",
+          (row) => row.appointments?.completed ?? 0,
+        ),
+        seriesFrom(
+          rows,
+          "no-shows",
+          "No-shows",
+          "--chart-2",
+          (row) => row.appointments?.noShows ?? 0,
+        ),
+      ],
+    };
+  }
+  return {
+    series: [
+      seriesFrom(
+        rows,
+        "revenue",
+        "Revenue ($)",
+        "--chart-1",
+        (row) => (row.revenue?.collectedCents ?? 0) / 100,
+      ),
+    ],
+  };
+}
