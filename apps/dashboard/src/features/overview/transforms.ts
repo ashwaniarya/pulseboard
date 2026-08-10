@@ -141,7 +141,8 @@ export interface TrendPoint {
 export interface TrendSeries {
   key: string;
   label: string;
-  colorVariable: string;
+  colorClassName: string;
+  swatchClassName: string;
   points: TrendPoint[];
 }
 
@@ -149,11 +150,18 @@ export interface TrendChartModel {
   series: TrendSeries[];
 }
 
+const SERIES_COLOR_CLASSES = {
+  primary: { colorClassName: "text-chart-1", swatchClassName: "bg-chart-1" },
+  contrast: { colorClassName: "text-chart-2", swatchClassName: "bg-chart-2" },
+} as const;
+
+type SeriesColorRole = keyof typeof SERIES_COLOR_CLASSES;
+
 function seriesFrom(
   rows: readonly DailyRowForSeries[],
   key: string,
   label: string,
-  colorVariable: string,
+  colorRole: SeriesColorRole,
   readValue: (row: DailyRowForSeries) => number,
 ): TrendSeries {
   const totalsByDate = new Map<string, number>();
@@ -163,7 +171,7 @@ function seriesFrom(
   const points = [...totalsByDate.entries()]
     .sort(([firstDate], [secondDate]) => firstDate.localeCompare(secondDate))
     .map(([date, value]) => ({ date, value }));
-  return { key, label, colorVariable, points };
+  return { key, label, ...SERIES_COLOR_CLASSES[colorRole], points };
 }
 
 export function buildTrendChartModel(
@@ -173,8 +181,8 @@ export function buildTrendChartModel(
   if (family === "calls") {
     return {
       series: [
-        seriesFrom(rows, "answered", "Answered", "--chart-1", (row) => row.calls?.answered ?? 0),
-        seriesFrom(rows, "missed", "Missed", "--chart-2", (row) => row.calls?.missed ?? 0),
+        seriesFrom(rows, "answered", "Answered", "primary", (row) => row.calls?.answered ?? 0),
+        seriesFrom(rows, "missed", "Missed", "contrast", (row) => row.calls?.missed ?? 0),
       ],
     };
   }
@@ -185,14 +193,14 @@ export function buildTrendChartModel(
           rows,
           "completed",
           "Completed",
-          "--chart-1",
+          "primary",
           (row) => row.appointments?.completed ?? 0,
         ),
         seriesFrom(
           rows,
           "no-shows",
           "No-shows",
-          "--chart-2",
+          "contrast",
           (row) => row.appointments?.noShows ?? 0,
         ),
       ],
@@ -204,7 +212,7 @@ export function buildTrendChartModel(
         rows,
         "revenue",
         "Revenue ($)",
-        "--chart-1",
+        "primary",
         (row) => (row.revenue?.collectedCents ?? 0) / 100,
       ),
     ],

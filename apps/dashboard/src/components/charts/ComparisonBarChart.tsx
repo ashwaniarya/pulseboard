@@ -7,7 +7,7 @@ import { formatCount } from "../../lib/formatters";
 
 export interface ComparisonBarDatum {
   groupLabel: string;
-  values: { label: string; value: number; colorVariable: string }[];
+  values: { label: string; value: number; colorClassName: string; swatchClassName: string }[];
 }
 
 export interface ComparisonBarChartProps {
@@ -65,14 +65,16 @@ function ComparisonBarsSvg({
                     width={barWidth}
                     height={Math.max(0, barHeight - 2)}
                     rx={4}
-                    style={{ fill: `var(${value.colorVariable})` }}
+                    className={value.colorClassName}
+                    fill="currentColor"
                   />
                   <text
                     x={barX + barWidth / 2}
                     y={valueScale(value.value) - 6}
                     textAnchor="middle"
-                    className="numeric-data"
-                    style={{ fill: "var(--text-muted)", fontSize: 10 }}
+                    className="numeric-data text-text-muted"
+                    fill="currentColor"
+                    fontSize={10}
                   >
                     {formatCount(value.value)}
                   </text>
@@ -81,18 +83,21 @@ function ComparisonBarsSvg({
             })}
           </Group>
         ))}
-        <AxisBottom
-          top={innerHeight}
-          scale={groupScale}
-          tickStroke="transparent"
-          hideAxisLine
-          tickLabelProps={{
-            style: { fill: "var(--text-muted)", fontSize: 11 },
-            textAnchor: "middle",
-            width: groupScale.bandwidth(),
-            verticalAnchor: "start",
-          }}
-        />
+        <g className="text-text-muted">
+          <AxisBottom
+            top={innerHeight}
+            scale={groupScale}
+            tickStroke="transparent"
+            hideAxisLine
+            tickLabelProps={{
+              fill: "currentColor",
+              fontSize: 11,
+              textAnchor: "middle",
+              width: groupScale.bandwidth(),
+              verticalAnchor: "start",
+            }}
+          />
+        </g>
       </Group>
     </svg>
   );
@@ -107,16 +112,17 @@ export function ComparisonBarChart(props: ComparisonBarChartProps) {
           <span key={value.label} className="flex items-center gap-1.5 text-xs text-text-muted">
             <span
               aria-hidden
-              className="inline-block size-2.5 rounded-small"
-              style={{ backgroundColor: `var(${value.colorVariable})` }}
+              className={`inline-block size-2.5 rounded-small ${value.swatchClassName}`}
             />
             {value.label}
           </span>
         ))}
       </div>
-      <ParentSize>
-        {({ width }) => (width > 0 ? <ComparisonBarsSvg {...props} width={width} /> : null)}
-      </ParentSize>
+      <div style={{ height: props.height ?? 260 }}>
+        <ParentSize>
+          {({ width }) => (width > 0 ? <ComparisonBarsSvg {...props} width={width} /> : null)}
+        </ParentSize>
+      </div>
     </div>
   );
 }

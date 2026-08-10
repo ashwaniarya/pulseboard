@@ -30,7 +30,7 @@ const CHART_MARGIN = { top: 12, right: 12, bottom: 28, left: 44 };
 
 interface TooltipDatum {
   date: string;
-  values: { label: string; value: number; colorVariable: string }[];
+  values: { label: string; value: number; swatchClassName: string }[];
 }
 
 function shortDateLabel(isoDate: string): string {
@@ -82,7 +82,7 @@ function TrendChartSvg({
         values: series.map((entry) => ({
           label: entry.label,
           value: entry.points[index]?.value ?? 0,
-          colorVariable: entry.colorVariable,
+          swatchClassName: entry.swatchClassName,
         })),
       },
       tooltipLeft: (dateScale(date) ?? 0) + CHART_MARGIN.left,
@@ -94,12 +94,15 @@ function TrendChartSvg({
     <div className="relative">
       <svg width={width} height={chartHeight} role="img" aria-label={ariaLabel}>
         <Group left={CHART_MARGIN.left} top={CHART_MARGIN.top}>
-          <GridRows
-            scale={valueScale}
-            width={innerWidth}
-            numTicks={4}
-            lineStyle={{ stroke: "var(--outline)", strokeOpacity: 0.6 }}
-          />
+          <g className="text-outline">
+            <GridRows
+              scale={valueScale}
+              width={innerWidth}
+              numTicks={4}
+              stroke="currentColor"
+              strokeOpacity={0.6}
+            />
+          </g>
           {(anomalyBands ?? []).map((band) => {
             const bandDates = dates.filter(
               (date) => date >= band.startDate && date <= band.endDate,
@@ -118,22 +121,24 @@ function TrendChartSvg({
                 y={0}
                 width={bandEnd - bandStart + dateScale.step()}
                 height={innerHeight}
-                style={{ fill: "var(--warning)" }}
+                className="text-warning"
+                fill="currentColor"
                 opacity={0.09}
               />
             );
           })}
           {series.map((entry) => (
-            <LinePath
-              key={entry.key}
-              data={entry.points}
-              x={(point) => dateScale(point.date) ?? 0}
-              y={(point) => valueScale(point.value)}
-              style={{ stroke: `var(${entry.colorVariable})` }}
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <g key={entry.key} className={entry.colorClassName}>
+              <LinePath
+                data={entry.points}
+                x={(point) => dateScale(point.date) ?? 0}
+                y={(point) => valueScale(point.value)}
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </g>
           ))}
           {tooltipData !== undefined && (
             <line
@@ -141,34 +146,43 @@ function TrendChartSvg({
               x2={dateScale(tooltipData.date) ?? 0}
               y1={0}
               y2={innerHeight}
-              style={{ stroke: "var(--outline-strong)" }}
+              className="text-outline-strong"
+              stroke="currentColor"
               strokeDasharray="3,3"
             />
           )}
-          <AxisLeft
-            scale={valueScale}
-            numTicks={4}
-            stroke="transparent"
-            tickStroke="transparent"
-            tickLabelProps={{
-              style: { fill: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: 11 },
-              textAnchor: "end",
-              dx: -4,
-            }}
-            tickFormat={(value) => formatCount(Number(value))}
-          />
-          <AxisBottom
-            top={innerHeight}
-            scale={dateScale}
-            numTicks={Math.min(6, dates.length)}
-            axisLineClassName="trend-chart-axis-line"
-            tickStroke="transparent"
-            tickLabelProps={{
-              style: { fill: "var(--text-muted)", fontFamily: "var(--font-mono)", fontSize: 11 },
-              textAnchor: "middle",
-            }}
-            tickFormat={(date) => shortDateLabel(String(date))}
-          />
+          <g className="numeric-data text-text-muted">
+            <AxisLeft
+              scale={valueScale}
+              numTicks={4}
+              stroke="transparent"
+              tickStroke="transparent"
+              tickLabelProps={{
+                fill: "currentColor",
+                fontSize: 11,
+                fontFamily: "inherit",
+                textAnchor: "end",
+                dx: -4,
+              }}
+              tickFormat={(value) => formatCount(Number(value))}
+            />
+          </g>
+          <g className="numeric-data text-text-muted">
+            <AxisBottom
+              top={innerHeight}
+              scale={dateScale}
+              numTicks={Math.min(6, dates.length)}
+              stroke="currentColor"
+              tickStroke="transparent"
+              tickLabelProps={{
+                fill: "currentColor",
+                fontSize: 11,
+                fontFamily: "inherit",
+                textAnchor: "middle",
+              }}
+              tickFormat={(date) => shortDateLabel(String(date))}
+            />
+          </g>
           <rect
             x={0}
             y={0}
@@ -194,8 +208,7 @@ function TrendChartSvg({
               <p key={entry.label} className="flex items-center gap-1.5 text-text-muted">
                 <span
                   aria-hidden
-                  className="inline-block size-2 rounded-full"
-                  style={{ backgroundColor: `var(${entry.colorVariable})` }}
+                  className={`inline-block size-2 rounded-full ${entry.swatchClassName}`}
                 />
                 {entry.label}: <span className="numeric-data">{formatCount(entry.value)}</span>
               </p>
@@ -215,16 +228,17 @@ export function TrendChart(props: TrendChartProps) {
           <span key={entry.key} className="flex items-center gap-1.5 text-xs text-text-muted">
             <span
               aria-hidden
-              className="inline-block h-0.5 w-4 rounded-full"
-              style={{ backgroundColor: `var(${entry.colorVariable})` }}
+              className={`inline-block h-0.5 w-4 rounded-full ${entry.swatchClassName}`}
             />
             {entry.label}
           </span>
         ))}
       </div>
-      <ParentSize>
-        {({ width }) => (width > 0 ? <TrendChartSvg {...props} width={width} /> : null)}
-      </ParentSize>
+      <div style={{ height: props.height ?? 280 }}>
+        <ParentSize>
+          {({ width }) => (width > 0 ? <TrendChartSvg {...props} width={width} /> : null)}
+        </ParentSize>
+      </div>
       <VisuallyHidden>
         <table>
           <caption>{props.ariaLabel}</caption>

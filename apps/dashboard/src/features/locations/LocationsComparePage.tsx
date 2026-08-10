@@ -79,8 +79,18 @@ export function LocationsComparePage() {
                     data={ranked.map((row) => ({
                       groupLabel: row.locationName.split(" ").slice(0, 2).join(" "),
                       values: [
-                        { label: "Answered", value: row.answeredCalls, colorVariable: "--chart-1" },
-                        { label: "Missed", value: row.missedCalls, colorVariable: "--chart-2" },
+                        {
+                          label: "Answered",
+                          value: row.answeredCalls,
+                          colorClassName: "text-chart-1",
+                          swatchClassName: "bg-chart-1",
+                        },
+                        {
+                          label: "Missed",
+                          value: row.missedCalls,
+                          colorClassName: "text-chart-2",
+                          swatchClassName: "bg-chart-2",
+                        },
                       ],
                     }))}
                   />
