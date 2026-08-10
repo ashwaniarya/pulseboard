@@ -1,4 +1,10 @@
 import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach } from "vitest";
+
+afterEach(() => {
+  cleanup();
+});
 
 // Node >=22 defines a global localStorage accessor that resolves to undefined unless
 // --localstorage-file is passed, and it shadows jsdom's storage inside Vitest.
