@@ -8,6 +8,13 @@ export {
 } from "./components/visually-hidden/visually-hidden";
 export { IconButton, type IconButtonProps } from "./components/icon-button/icon-button";
 export {
+  DateRangePicker,
+  formatDateRangeLabel,
+  type DateRangePickerPreset,
+  type DateRangePickerProps,
+  type DateRangeValue,
+} from "./components/date-range-picker/date-range-picker";
+export {
   Dialog,
   DialogClose,
   DialogContent,

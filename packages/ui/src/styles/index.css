@@ -32,6 +32,23 @@
   }
 }
 
+.pulseboard-day-picker {
+  --rdp-accent-color: var(--accent);
+  --rdp-accent-background-color: var(--accent);
+  --rdp-range_start-color: var(--accent-foreground);
+  --rdp-range_start-background: var(--accent);
+  --rdp-range_end-color: var(--accent-foreground);
+  --rdp-range_end-background: var(--accent);
+  --rdp-range_middle-background-color: var(--surface-sunken);
+  --rdp-range_middle-color: var(--text-primary);
+  --rdp-selected-border: 2px solid var(--accent);
+  --rdp-today-color: var(--accent);
+  --rdp-day-height: 2.1rem;
+  --rdp-day-width: 2.1rem;
+  --rdp-day_button-height: 2rem;
+  --rdp-day_button-width: 2rem;
+}
+
 @utility dot-grid-canvas {
   background-image: radial-gradient(var(--outline) 1px, transparent 1px);
   background-size: 22px 22px;
