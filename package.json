@@ -12,7 +12,9 @@
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:unit": "vitest run --project mock-api --project ui --project dashboard"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
@@ -24,6 +26,8 @@
     "globals": "^17.9.0",
     "prettier": "^3.9.6",
     "typescript": "~5.9.2",
-    "typescript-eslint": "^8.66.0"
-  }
+    "typescript-eslint": "^8.66.0",
+    "vitest": "^4.1.10"
+  },
+  "type": "module"
 }
