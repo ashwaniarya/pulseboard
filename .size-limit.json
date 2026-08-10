@@ -1,0 +1,22 @@
+[
+  {
+    "name": "app entry (gzip)",
+    "path": "apps/dashboard/dist/assets/index-*.js",
+    "limit": "360 KB"
+  },
+  {
+    "name": "overview chunk incl. visx (gzip)",
+    "path": "apps/dashboard/dist/assets/overviewApi-*.js",
+    "limit": "30 KB"
+  },
+  {
+    "name": "calls chunk (gzip)",
+    "path": "apps/dashboard/dist/assets/CallsPage-*.js",
+    "limit": "10 KB"
+  },
+  {
+    "name": "stylesheet (gzip)",
+    "path": "apps/dashboard/dist/assets/index-*.css",
+    "limit": "12 KB"
+  }
+]

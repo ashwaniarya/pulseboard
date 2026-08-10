@@ -18,11 +18,15 @@
     "storybook": "pnpm --filter @pulseboard/ui storybook",
     "build-storybook": "pnpm --filter @pulseboard/ui build-storybook",
     "test:storybook": "vitest run --project storybook",
-    "test:e2e": "pnpm --filter @pulseboard/dashboard e2e:ci"
+    "test:e2e": "pnpm --filter @pulseboard/dashboard e2e:ci",
+    "test:coverage": "vitest run --project mock-api --project ui --project dashboard --coverage",
+    "size": "size-limit"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@size-limit/file": "^13.0.3",
     "@vitest/browser": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -31,6 +35,7 @@
     "globals": "^17.9.0",
     "playwright": "^1.62.1",
     "prettier": "^3.9.6",
+    "size-limit": "^13.0.3",
     "typescript": "~5.9.2",
     "typescript-eslint": "^8.66.0",
     "vitest": "^4.1.10"
