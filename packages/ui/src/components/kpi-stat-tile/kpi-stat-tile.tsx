@@ -72,6 +72,7 @@ export function KpiStatTile({
   if (isLoading) {
     return (
       <Card
+        role="status"
         aria-busy="true"
         aria-label={label}
         className={classNames("flex h-[7.5rem] flex-col justify-between", className)}
