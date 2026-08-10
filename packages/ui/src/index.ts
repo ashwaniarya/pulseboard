@@ -7,6 +7,8 @@ export {
   type VisuallyHiddenProps,
 } from "./components/visually-hidden/visually-hidden";
 export { IconButton, type IconButtonProps } from "./components/icon-button/icon-button";
+export { Input, type InputProps } from "./components/input/input";
+export { Select, type SelectProps } from "./components/select/select";
 export { Spinner, type SpinnerProps } from "./components/spinner/spinner";
 export { classNames } from "./lib/class-names";
 export {
