@@ -3,6 +3,7 @@ import { http, HttpResponse } from "msw";
 import type { DailyLocationMetrics, LocationId } from "../domain";
 import { getActiveDataset } from "../data/dataset";
 import { daysBetween, shiftIsoDate } from "../data/dateMath";
+import { applyScenarioDelay, maybeScenarioFailure } from "../scenarios";
 import { computeMetricsTotals } from "./shared/computeMetricsTotals";
 import {
   parseDateRangeParams,
@@ -51,7 +52,12 @@ export function previousPeriodOf(range: DateRangeParams): DateRangeParams {
 }
 
 export const metricsHandlers = [
-  http.get("*/api/v1/metrics/daily", ({ request }) => {
+  http.get("*/api/v1/metrics/daily", async ({ request }) => {
+    await applyScenarioDelay();
+    const failure = maybeScenarioFailure("metrics");
+    if (failure !== null) {
+      return failure;
+    }
     const parsed = parseMetricsRequest(request.url);
     if ("error" in parsed) {
       return parsed.error;
@@ -66,7 +72,12 @@ export const metricsHandlers = [
       },
     });
   }),
-  http.get("*/api/v1/metrics/summary", ({ request }) => {
+  http.get("*/api/v1/metrics/summary", async ({ request }) => {
+    await applyScenarioDelay();
+    const failure = maybeScenarioFailure("metrics");
+    if (failure !== null) {
+      return failure;
+    }
     const parsed = parseMetricsRequest(request.url);
     if ("error" in parsed) {
       return parsed.error;

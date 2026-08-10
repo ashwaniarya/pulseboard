@@ -2,9 +2,15 @@ import { http, HttpResponse } from "msw";
 
 import { DATASET_SEED_VERSION } from "../domain";
 import { getActiveDataset } from "../data/dataset";
+import { applyScenarioDelay, maybeScenarioFailure } from "../scenarios";
 
 export const healthHandlers = [
-  http.get("*/api/v1/health", () => {
+  http.get("*/api/v1/health", async () => {
+    await applyScenarioDelay();
+    const failure = maybeScenarioFailure("other");
+    if (failure !== null) {
+      return failure;
+    }
     const dataset = getActiveDataset();
     return HttpResponse.json({
       data: {

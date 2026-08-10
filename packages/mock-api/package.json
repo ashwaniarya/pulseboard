@@ -12,5 +12,13 @@
   },
   "dependencies": {
     "msw": "^2.15.0"
+  },
+  "exports": {
+    ".": "./src/domain.ts",
+    "./handlers": "./src/handlers/index.ts",
+    "./browser": "./src/browser.ts",
+    "./node": "./src/node.ts",
+    "./data": "./src/data/dataset.ts",
+    "./scenarios": "./src/scenarios.ts"
   }
 }

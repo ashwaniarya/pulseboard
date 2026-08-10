@@ -1,14 +1,13 @@
-import { setupServer } from "msw/node";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { CLINIC_LOCATIONS } from "../data/locations";
 import { configureDataset, getActiveDataset } from "../data/dataset";
-import { allHandlers } from "./index";
+import { createMockApiNodeServer } from "../node";
 
 const PINNED_END_DATE = "2026-08-10";
 const BASE_URL = "http://pulseboard.test/api/v1";
 
-const server = setupServer(...allHandlers);
+const server = createMockApiNodeServer();
 
 beforeAll(() => {
   configureDataset({ endDate: PINNED_END_DATE, dayCount: 90 });

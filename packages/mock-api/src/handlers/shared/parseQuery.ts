@@ -64,6 +64,26 @@ export function parseLocationIdsParam(
   return { ok: true, value: requestedIds };
 }
 
+export function parseEnumListParam<T extends string>(
+  url: URL,
+  parameterName: string,
+  allowedValues: readonly T[],
+): QueryParseResult<T[]> {
+  const rawValue = url.searchParams.get(parameterName);
+  if (rawValue === null || rawValue.trim() === "") {
+    return { ok: true, value: [] };
+  }
+  const requestedValues = rawValue.split(",").map((value) => value.trim());
+  const allowed = new Set<string>(allowedValues);
+  const unknownValue = requestedValues.find((value) => !allowed.has(value));
+  if (unknownValue !== undefined) {
+    return invalidParameter(
+      `${parameterName} contains an unknown value "${unknownValue}". Allowed: ${allowedValues.join(", ")}.`,
+    );
+  }
+  return { ok: true, value: requestedValues as T[] };
+}
+
 export function problemResponseFor(result: { problem: ProblemInput }) {
   return problemResponse(result.problem);
 }
