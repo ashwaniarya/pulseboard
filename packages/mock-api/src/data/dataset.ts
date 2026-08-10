@@ -1,6 +1,6 @@
 import type { CallRecord, ClinicLocation, DailyLocationMetrics } from "../domain";
 import { resolveAnomalyCalendar, type AnomalyWindow } from "./anomalies";
-import { listDatesEndingAt, shiftIsoDate } from "./dateMath";
+import { formatIsoDate, listDatesEndingAt, shiftIsoDate } from "./dateMath";
 import { generateCallRecordsForDay } from "./generateCallRecords";
 import { generateDailyMetricsForDay } from "./generateDailyMetrics";
 import { CLINIC_LOCATIONS } from "./locations";
@@ -50,4 +50,16 @@ export function generateDataset(options: GenerateDatasetOptions): PulseboardData
     dailyMetrics,
     callRecords,
   };
+}
+
+let activeDataset: PulseboardDataset | null = null;
+
+export function configureDataset(options: GenerateDatasetOptions): PulseboardDataset {
+  activeDataset = generateDataset(options);
+  return activeDataset;
+}
+
+export function getActiveDataset(): PulseboardDataset {
+  activeDataset ??= generateDataset({ endDate: formatIsoDate(new Date()) });
+  return activeDataset;
 }
