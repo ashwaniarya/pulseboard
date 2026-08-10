@@ -73,6 +73,7 @@ export function KpiStatTile({
     return (
       <Card
         aria-busy="true"
+        aria-label={label}
         className={classNames("flex h-[7.5rem] flex-col justify-between", className)}
       >
         <Skeleton shape="rectangle" className="h-3.5 w-24" />

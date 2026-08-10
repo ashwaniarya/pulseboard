@@ -1,9 +1,23 @@
 import "@testing-library/jest-dom/vitest";
+import { configureDataset } from "@pulseboard/mock-api/data";
 import { cleanup } from "@testing-library/react";
-import { afterEach } from "vitest";
+import { afterAll, afterEach, beforeAll, vi } from "vitest";
+
+import { mockApiServer } from "./src/test/mockApiServer";
+
+beforeAll(() => {
+  configureDataset({ endDate: "2026-08-10", dayCount: 90 });
+  mockApiServer.listen({ onUnhandledRequest: "error" });
+});
 
 afterEach(() => {
   cleanup();
+  mockApiServer.resetHandlers();
+  vi.restoreAllMocks();
+});
+
+afterAll(() => {
+  mockApiServer.close();
 });
 
 // Node >=22 defines a global localStorage accessor that resolves to undefined unless

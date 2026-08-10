@@ -1,7 +1,12 @@
+import { WidgetErrorBoundary } from "../../components/feedback/WidgetErrorBoundary";
+import { KpiTileRow } from "./KpiTileRow";
+
 export function OverviewPage() {
   return (
-    <div className="p-6">
-      <p className="text-sm text-text-muted">Overview widgets land here next.</p>
+    <div className="space-y-4 p-6">
+      <WidgetErrorBoundary>
+        <KpiTileRow />
+      </WidgetErrorBoundary>
     </div>
   );
 }

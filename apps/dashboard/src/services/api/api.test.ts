@@ -1,27 +1,11 @@
-import { configureDataset } from "@pulseboard/mock-api/data";
-import { createMockApiNodeServer } from "@pulseboard/mock-api/node";
 import { http, HttpResponse } from "msw";
-import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { baseApi } from "./baseApi";
 import { isProblemDetails, userMessageFromApiError } from "./problemDetails";
 import { shouldRetryRequest } from "./retryingBaseQuery";
 import { createDashboardStore } from "../../app/store";
-
-const server = createMockApiNodeServer();
-
-beforeAll(() => {
-  configureDataset({ endDate: "2026-08-10", dayCount: 30 });
-  server.listen({ onUnhandledRequest: "error" });
-});
-
-afterEach(() => {
-  server.resetHandlers();
-});
-
-afterAll(() => {
-  server.close();
-});
+import { mockApiServer as server } from "../../test/mockApiServer";
 
 const testApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
