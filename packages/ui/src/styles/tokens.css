@@ -17,7 +17,7 @@
   --warning: #8a5a00;
   --warning-surface: #fbefd9;
   --focus-ring: #0e7569;
-  --chart-1: #0e7569;
+  --chart-1: #0b8a70;
   --chart-2: #b03a2b;
   --chart-3: #4a56c2;
   --chart-4: #8a5a00;
@@ -46,12 +46,12 @@
   --warning: #e7b04a;
   --warning-surface: #2e2414;
   --focus-ring: #34c3b1;
-  --chart-1: #3fcbb9;
-  --chart-2: #ff8a73;
-  --chart-3: #93a0ff;
-  --chart-4: #e7b04a;
-  --chart-5: #e783be;
-  --chart-6: #a3c46a;
+  --chart-1: #0f9584;
+  --chart-2: #e04f35;
+  --chart-3: #5a68e0;
+  --chart-4: #c08a1e;
+  --chart-5: #c04a8e;
+  --chart-6: #7a9a3e;
   --elevation-raised:
     0 1px 2px rgb(0 0 0 / 0.35), 0 4px 14px rgb(0 0 0 / 0.35), 0 0 0 1px rgb(255 255 255 / 0.04);
   --elevation-overlay:
