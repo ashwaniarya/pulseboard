@@ -25,6 +25,18 @@ export {
 } from "./components/dialog/dialog";
 export { Input, type InputProps } from "./components/input/input";
 export {
+  KpiStatTile,
+  type KpiDelta,
+  type KpiDeltaDirection,
+  type KpiDeltaSentiment,
+  type KpiStatTileProps,
+} from "./components/kpi-stat-tile/kpi-stat-tile";
+export {
+  Sparkline,
+  buildSparklinePath,
+  type SparklineProps,
+} from "./components/sparkline/sparkline";
+export {
   MultiSelect,
   type MultiSelectOption,
   type MultiSelectProps,
