@@ -1,6 +1,8 @@
 import { AppShell, Badge, Sidebar, SidebarNavItem, ThemeToggle } from "@pulseboard/ui";
 import { NavLink, Outlet, useLocation } from "react-router";
 
+import { ApiStatusBanner } from "../../features/apiHealth/ApiStatusBanner";
+import { DemoScenarioMenu } from "../../features/demoControls/DemoScenarioMenu";
 import { DateRangeFilterControl } from "../../features/filters/DateRangeFilterControl";
 import { LocationFilterControl } from "../../features/filters/LocationFilterControl";
 
@@ -103,10 +105,12 @@ export function AppShellLayout() {
           <div className="flex flex-wrap items-center gap-2">
             <DateRangeFilterControl />
             <LocationFilterControl />
+            <DemoScenarioMenu />
             <ThemeToggle />
           </div>
         </div>
       }
+      banner={<ApiStatusBanner />}
     >
       <Outlet />
     </AppShell>
