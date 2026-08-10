@@ -37,4 +37,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
+      - run: pnpm build
       - run: pnpm build-storybook
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-dist
+          path: apps/dashboard/dist
+          retention-days: 1
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@v4
+        with:
+          name: dashboard-dist
+          path: apps/dashboard/dist
+      - uses: cypress-io/github-action@v6
+        with:
+          install: false
+          working-directory: apps/dashboard
+          start: pnpm preview
+          wait-on: "http://localhost:4173"
+          wait-on-timeout: 60
+          browser: chrome
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/dashboard/cypress/screenshots
+          if-no-files-found: ignore
