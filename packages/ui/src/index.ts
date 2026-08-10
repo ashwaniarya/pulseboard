@@ -7,7 +7,24 @@ export {
   type VisuallyHiddenProps,
 } from "./components/visually-hidden/visually-hidden";
 export { IconButton, type IconButtonProps } from "./components/icon-button/icon-button";
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+  type DialogContentProps,
+} from "./components/dialog/dialog";
 export { Input, type InputProps } from "./components/input/input";
+export {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+  PopoverTrigger,
+  type PopoverContentProps,
+} from "./components/popover/popover";
+export { Tooltip, type TooltipProps } from "./components/tooltip/tooltip";
 export { Select, type SelectProps } from "./components/select/select";
 export { Spinner, type SpinnerProps } from "./components/spinner/spinner";
 export { classNames } from "./lib/class-names";
