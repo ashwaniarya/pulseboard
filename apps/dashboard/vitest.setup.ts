@@ -53,3 +53,17 @@ if (typeof window !== "undefined" && window.localStorage === undefined) {
     configurable: true,
   });
 }
+
+const resizeObserverNoop = (): void => {
+  return undefined;
+};
+
+class ResizeObserverStub {
+  observe = resizeObserverNoop;
+  unobserve = resizeObserverNoop;
+  disconnect = resizeObserverNoop;
+}
+
+if (typeof globalThis.ResizeObserver === "undefined") {
+  globalThis.ResizeObserver = ResizeObserverStub;
+}
