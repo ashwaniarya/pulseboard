@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import { filtersReducer } from "../features/filters/filtersSlice";
 import { baseApi } from "../services/api/baseApi";
+import { listenerMiddleware } from "./listenerMiddleware";
 
 export function createDashboardStore() {
   return configureStore({
     reducer: {
       [baseApi.reducerPath]: baseApi.reducer,
+      filters: filtersReducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().prepend(listenerMiddleware.middleware).concat(baseApi.middleware),
   });
 }
 
