@@ -108,8 +108,12 @@ function drawStartedAt(random: () => number, isoDate: string): string {
   return new Date(timestamp).toISOString();
 }
 
-export function generateCallRecordsForDay(location: ClinicLocation, isoDate: string): CallRecord[] {
-  const multiplier = weekdayCallMultiplier(location, isoDate);
+export function generateCallRecordsForDay(
+  location: ClinicLocation,
+  isoDate: string,
+  volumeMultiplier = 1,
+): CallRecord[] {
+  const multiplier = weekdayCallMultiplier(location, isoDate) * volumeMultiplier;
   if (multiplier === 0) {
     return [];
   }

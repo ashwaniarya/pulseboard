@@ -190,9 +190,17 @@ describe("generateDataset", () => {
     expect(dataset.callRecords.length).toBeLessThan(70000);
   });
 
-  it("agrees on overlapping dates when the window slides forward", () => {
-    const earlierWindow = generateDataset({ endDate: "2026-08-03", dayCount: 30 });
-    const laterWindow = generateDataset({ endDate: PINNED_END_DATE, dayCount: 30 });
+  it("agrees on overlapping dates when the anomaly-free window slides forward", () => {
+    const earlierWindow = generateDataset({
+      endDate: "2026-08-03",
+      dayCount: 30,
+      includeAnomalies: false,
+    });
+    const laterWindow = generateDataset({
+      endDate: PINNED_END_DATE,
+      dayCount: 30,
+      includeAnomalies: false,
+    });
     const sharedDate = "2026-07-30";
     const pickShared = (dataset: typeof earlierWindow) =>
       dataset.dailyMetrics.filter((metrics) => metrics.date === sharedDate);
