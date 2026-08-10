@@ -8,6 +8,7 @@ import { Badge, Button, Popover, PopoverContent, PopoverTrigger } from "@pulsebo
 import { useState } from "react";
 
 import { useAppDispatch } from "../../app/hooks";
+import { reportCaughtError } from "../../observability/sentry";
 import { baseApi } from "../../services/api/baseApi";
 
 export function DemoScenarioMenu() {
@@ -39,6 +40,16 @@ export function DemoScenarioMenu() {
           Flip the mock API into failure modes and watch the error architecture respond.
         </p>
         <div className="flex flex-col gap-1">
+          <Button
+            size="small"
+            variant="ghost"
+            className="justify-start"
+            onClick={() => {
+              reportCaughtError(new Error("Pulseboard demo: handled exception"));
+            }}
+          >
+            Capture a handled exception (Sentry)
+          </Button>
           {Object.values(SCENARIO_PRESETS).map((scenario) => (
             <Button
               key={scenario.key}

@@ -1,6 +1,8 @@
 import { ErrorState } from "@pulseboard/ui";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
+import { reportCaughtError } from "../../observability/sentry";
+
 export interface WidgetErrorBoundaryProps {
   children: ReactNode;
   onReset?: () => void;
@@ -22,6 +24,7 @@ export class WidgetErrorBoundary extends Component<
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     console.error("Widget crashed", error, errorInfo.componentStack);
+    reportCaughtError(error);
   }
 
   handleReset = (): void => {
