@@ -10,6 +10,11 @@ error architecture you can watch working, and a CI gate where green means shippa
 ![CI](https://github.com/ashwaniarya/pulseboard/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-teal)
 
+**Live demo:** [pulseboard-green-chi.vercel.app](https://pulseboard-green-chi.vercel.app) ·
+**Design system:** [pulseboard-storybook.vercel.app](https://pulseboard-storybook.vercel.app) ·
+try the [failure-mode demo](https://pulseboard-green-chi.vercel.app/?apiScenario=degraded) or the
+[50k-row benchmark](https://pulseboard-green-chi.vercel.app/benchmark/table)
+
 ![Pulseboard overview, dark theme](docs/screenshots/dashboard-dark.png)
 
 <details>
