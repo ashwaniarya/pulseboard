@@ -1,10 +1,10 @@
-const PINNED = "datasetEndDate=2026-08-10";
+import { PINNED_LAST_30_DAYS_QUERY } from "../support/pinnedDataset";
 
 const EXPECTED_ANSWERED_LAST30 = "13,324";
 
 describe("application boot", () => {
   it("serves the shell with live seeded metrics", () => {
-    cy.visit(`/?${PINNED}&range=last30`);
+    cy.visit(`/?${PINNED_LAST_30_DAYS_QUERY}`);
     cy.contains("Pulseboard");
     cy.get('nav[aria-label="Primary"]').within(() => {
       cy.contains("Overview");
