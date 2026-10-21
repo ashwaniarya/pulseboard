@@ -1,8 +1,8 @@
-const PINNED = "datasetEndDate=2026-08-10";
+import { PINNED_LAST_30_DAYS_QUERY } from "../support/pinnedDataset";
 
 describe("error architecture", () => {
   it("degrades gracefully during an outage and recovers", () => {
-    cy.visit(`/?${PINNED}&range=last30&apiScenario=outage`);
+    cy.visit(`/?${PINNED_LAST_30_DAYS_QUERY}&apiScenario=outage`);
     cy.contains("Couldn't load this data", { timeout: 20000 });
     cy.contains("Live data is having trouble", { timeout: 20000 });
 
