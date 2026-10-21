@@ -62,7 +62,7 @@ jobs:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
       - run: pnpm --filter @pulseboard/dashboard exec cypress install
-      - uses: cypress-io/github-action@v6
+      - uses: cypress-io/github-action@v7
         with:
           install: false
           working-directory: apps/dashboard
